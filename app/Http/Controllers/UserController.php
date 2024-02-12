@@ -55,8 +55,13 @@ class UserController extends Controller
         if (isset($data['image'])) {
             $relativePath = $this->saveImage($data['image']);
             $data['image'] = $relativePath;
+
+            if (File::exists('storage/userProfile/' . $user->image)) {
+                $absolutePath = public_path("/storage/userProfile/" . $user->image);
+                File::delete($absolutePath);
+            }
         }
-        
+
         $user->update($data);
 
         return new UserResource($user);

@@ -1,22 +1,26 @@
 import { FaRegUserCircle } from "react-icons/fa";
-import { IoMdExit } from "react-icons/io";
-import { FaUser } from "react-icons/fa";
-
 import { useRef, useState, useEffect } from "react";
 import SideBar from "./SideBar";
 import { useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import LayoutDropdown from "../../Dropdown/LayoutDropdown";
 
 
-export default function DefaultLayout({ children }) {
+export default function DefaultLayout() {
 
     const [dropdown, setDropdown] = useState(false);
     const sidebar = useSelector(state => state.sidebar)
 
     const menuRef = useRef();
 
-    useEffect(() => {
+    const { authToken } = useSelector(state => state.auth);
 
+    if (!authToken) {
+        return <Navigate to="login" />
+    }
+
+
+    useEffect(() => {
         const closeDropdown = (e) => {
             if (menuRef.current && !menuRef.current.contains(e.target)) {
                 setDropdown(false);
@@ -46,18 +50,7 @@ export default function DefaultLayout({ children }) {
                                         size={30} className="hover:text-white cursor-pointer " />
                                 </div>
                                 {dropdown && (
-                                    <div className="bg-gray-400 text-white px-5 py-4 absolute top-0 right-0 mt-10 rounded z-50">
-                                        <ul className="flex flex-col gap-3">
-                                            <li className="flex gap-2 items-center cursor-pointer hover:text-slate-500">
-                                                <FaUser />
-                                                <p className="m-0 p-0 underline">Profile</p>
-                                            </li>
-                                            <li className="flex gap-2 items-center cursor-pointer hover:text-slate-500">
-                                                <IoMdExit />
-                                                <p className="m-0 p-0 underline">Logout</p>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <LayoutDropdown />
                                 )}
                             </div>
                         </div>
