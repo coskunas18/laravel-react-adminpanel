@@ -65,7 +65,7 @@ export default function SideBar({ sidebar }) {
                  border-black h-screen text-white ${sidebar.sidebarIsOpen ? 'left-0' : "-left-[8rem]"}`}>
                 <div className="mt-4 flex justify-between mx-3 gap-3 items-center">
                     <div className="flex justify-center w-full">
-                        <p className="font-bold text-center">TAC - SERVICES</p>
+                        <p className="font-bold text-center">CRM-PROJECT</p>
                     </div>
                     <div onClick={() => dispatch(sideBarToggle())}>
                         <IoMdArrowBack size={30} className={`hover:text-slate-300 cursor-pointer transition-all duration-300

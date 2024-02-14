@@ -8,13 +8,13 @@ import UserModalTitle from './UserModalTitle';
 export default function UserEditModal({ user, closeModal }) {
 
 
-    const [name, setName] = useState(user?.name);
-    const [email, setEmail] = useState(user?.email);
-    const [telephone, setTelephone] = useState(user?.telephone);
-    const [userStatus, setUserStatus] = useState(user?.status);
+    const [name, setName] = useState(user?.name || '');
+    const [email, setEmail] = useState(user?.email || '');
+    const [telephone, setTelephone] = useState(user?.telephone || '');
+    const [userStatus, setUserStatus] = useState(user?.status || '');
     const [errorMessage, setErrorMessage] = useState('');
     const [userImage, setUserImage] = useState(null)
-    const [previewImage,setPreviewUrl] = useState(user?.image);
+    const [previewImage, setPreviewUrl] = useState(user?.image || '');
     const status = useSelector(getUserStatus)
     const fileInputRef = useRef(null)
     const dispatch = useDispatch()

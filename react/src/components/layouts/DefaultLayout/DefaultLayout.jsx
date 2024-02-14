@@ -15,22 +15,25 @@ export default function DefaultLayout() {
 
     const { authToken } = useSelector(state => state.auth);
 
+    const closeDropdown = (e) => {
+        if (menuRef.current && !menuRef.current.contains(e.target)) {
+            setDropdown(false);
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener("click", closeDropdown)
+
+        return () => document.body.removeEventListener('click', closeDropdown)
+    }, [dropdown]);
+
+
     if (!authToken) {
         return <Navigate to="login" />
     }
 
 
-    useEffect(() => {
-        const closeDropdown = (e) => {
-            if (menuRef.current && !menuRef.current.contains(e.target)) {
-                setDropdown(false);
-            }
-        }
 
-        window.addEventListener("click", closeDropdown)
-
-        return () => document.body.removeEventListener('click', closeDropdown)
-    }, [dropdown]);
 
     return (
         <div>

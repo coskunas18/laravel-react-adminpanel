@@ -20,7 +20,6 @@ export default function UserModalTitle({ title, userPreview = null }) {
                 )}
             </div>
 
-
             {errors !== null && (
                 <UserModalErrors />
             )}

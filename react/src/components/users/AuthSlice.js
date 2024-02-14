@@ -5,21 +5,31 @@ const initialState = {
     loading:false,
     currentUser:null,
     authToken:localStorage.getItem('TOKEN') || '',
-    error:null,
+    errors:null,
 
 }
 
 
 
 export const authLogin = createAsyncThunk('auth/authLogin',async(credentials)=>{
+    try {
     const request = await axiosClient.post(`/login`,credentials);
-    return request.data
+       return request.data;
+    } catch (err) {
+           return err.response.data // Sunucudan dönen hata mesajı
+    }
+
 })
 
 export const authLogout = createAsyncThunk('auth/authLogout',async()=>{
-    const request = await axiosClient.post(`/logout`);
-    return request.data
+  await axiosClient.post(`/logout`);
+  return;
 })
+
+export const authSignUp = createAsyncThunk('auth/authSignUp',async(credentials)=>{
+    const request = await axiosClient.post(`/signup`,credentials);
+    return request.data;
+  })
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -42,9 +52,42 @@ export const authSlice = createSlice({
         builder.addCase(authLogin.pending,(state)=> {
             state.loading = true;
             state.user = null,
-            state.error = null
+            state.errors = null
         })
         .addCase(authLogin.fulfilled,(state,action)=>{
+            state.loading = false;
+
+            console.log(action)
+
+           if(action.payload?.errors){
+                state.errors = action.payload.errors
+            }
+
+            //set token
+            if (action.payload?.token && action.payload?.user ) {
+                state.authToken = action.payload.token;
+                if (state.authToken != null) {
+                    localStorage.setItem('TOKEN',state.authToken);
+                }else{
+                    localStorage.removeItem('TOKEN');
+                    console.log(state.authToken);
+                }
+               //set token
+               
+               state.currentUser = action.payload.user;
+            }
+        })
+        .addCase(authLogout.fulfilled,(state)=>{
+            state.loading = false;
+            state.user = null;
+            state.authToken=null;
+            if (state.authToken != null) {
+                localStorage.setItem('TOKEN',state.authToken);
+            }else{
+                localStorage.removeItem('TOKEN');
+            }
+        })
+        .addCase(authSignUp.fulfilled,(state,action)=>{
             state.loading = false;
             //set token
             state.authToken = action.payload.token;
@@ -52,20 +95,9 @@ export const authSlice = createSlice({
                 localStorage.setItem('TOKEN',state.authToken);
             }else{
                 localStorage.removeItem('TOKEN');
-                console.log(state.authToken);
             }
            //set token
            state.currentUser = action.payload.user;
-        })
-        .addCase(authLogin.rejected,(state,action)=>{
-            state.loading = false;
-            state.user = null;
-            console.log(action)
-        })
-        .addCase(authLogin.rejected,(state,action)=>{
-            state.loading = false;
-            state.user = null;
-            console.log(action)
         })
 
     }

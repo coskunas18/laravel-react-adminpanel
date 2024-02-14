@@ -8,7 +8,6 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use((config)=>{
     config.headers.Authorization = `Bearer ${localStorage.getItem('TOKEN')}`
-    console.log(config);
     return config
 })
 

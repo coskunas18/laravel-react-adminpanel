@@ -36,8 +36,8 @@ class AuthController extends Controller
         unset($credentials['remember']);
 
         if (!Auth::attempt($credentials, $remember)) {
-            return response([
-                'error' => 'The Provided credentials are not correct'
+            return response()->json([
+                'errors' => ['The Provided credentials are not correct']
             ], 422);
         }
 
@@ -64,8 +64,6 @@ class AuthController extends Controller
         }
 
         $user->currentAccessToken()->delete();
-
-        Auth::logout(); // Oturumu sonlandır
 
         return response([
             'success' => true
