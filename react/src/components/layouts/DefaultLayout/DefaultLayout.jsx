@@ -19,7 +19,6 @@ export default function DefaultLayout() {
 
     const { authToken, currentUser, loading } = useSelector(state => state.auth);
 
-    console.log(currentUser);
 
     useEffect(() => {
         dispatch(authCurrentUser());

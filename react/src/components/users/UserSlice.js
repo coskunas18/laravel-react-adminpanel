@@ -10,6 +10,7 @@ const initialState =  usersAdapter.getInitialState({
     meta:'',
     links:'',
     searching:'',
+
 });
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async ({page,pageSize,search}) => {
@@ -91,7 +92,8 @@ export const UsersSlice = createSlice({
         },
         onChangeError:(state,action) => {
             state.error = action.payload
-        }
+        },
+
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.pending,(state) => {
@@ -121,7 +123,6 @@ export const UsersSlice = createSlice({
 
         })
         .addCase(updateUser.fulfilled,(state,action) => {
-
             if (!action.payload.data?.id) {
                 console.log('Update could not complete')
                 state.error = action.payload
@@ -129,7 +130,7 @@ export const UsersSlice = createSlice({
             }else{
                 state.status = "idle"
                 state.error = null
-                usersAdapter.upsertOne(state,action.payload.data)
+                usersAdapter.upsertOne(state,action.payload.data);
             }
 
         }). addCase(deleteUser.fulfilled,(state,action) => {
@@ -159,7 +160,6 @@ export const getUserCurrentPage = (state) => state.users.currentPage;
 export const getUserPerPage = (state) => state.users.perPage;
 export const getUserSearch = (state) => state.users.searching;
 export const getUserError = (state) => state.users.error;
-
 export const {
     onNextPage,
     onPrevPage,
@@ -168,7 +168,7 @@ export const {
     onChangePerPage,
     onChangeSearch,
     onChangeStatus,
-    onChangeError
+    onChangeError,
 } = UsersSlice.actions;
 
 export default UsersSlice.reducer;

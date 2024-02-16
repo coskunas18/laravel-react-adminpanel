@@ -6,6 +6,8 @@ import { RiErrorWarningFill } from "react-icons/ri";
 
 export default function ToastItem({ type, title, deleteToast, id }) {
     const [closeAnimation, setCloseAnimation] = useState(false);
+    const [isMouseHover, setIsMouseHover] = useState(false);
+    const [remainingTime, setRemainingTime] = useState(0);
 
     const timerRef = useRef(null);
     const duration = 2000;
@@ -23,7 +25,22 @@ export default function ToastItem({ type, title, deleteToast, id }) {
 
     }, []);
 
-    handleDeleteToast = () => {
+    const handlePauseTimer = () => {
+        setRemainingTime(timerRef.current);
+        setIsMouseHover(!isMouseHover);
+        clearTimeout(timerRef.current);
+    }
+
+    const handleResumeTimer = () => {
+        const remaining = Math.abs(remainingTime - duration);
+        timerRef.current = setTimeout(() => {
+            handleDeleteToast();
+            setCloseAnimation(true);
+        }, remaining)
+    }
+
+
+    const handleDeleteToast = () => {
         setTimeout(() => {
             deleteToast(id)
         }, 300)
@@ -31,32 +48,34 @@ export default function ToastItem({ type, title, deleteToast, id }) {
 
 
     const getIcon = (iconType) => {
-        const wd = 30;
-        const hg = 30;
+        const size = 30;
 
         const iconTypes = {
-            'success': <MdOutlineDone />,
-            'error': <RiErrorWarningFill />,
-            'info': <FaInfo />
+            'success': <MdOutlineDone size={size} />,
+            'error': <RiErrorWarningFill size={size} />,
+            'info': <FaInfo size={size} />
         }
 
-        return iconTypes[iconType];
+        return iconTypes[iconType] ?? "bok";
     }
 
 
     return (
-        <div className="toast-item" ref={timerRef}>
-            <div className="toast-item-content">
-                <div className="toast-item-icon">
-                    {getIcon(type)}
-                </div>
-                <div className="toast-item-title">
-                    {title}
-                </div>
-                <div className="toast-item-close" onClick={() => deleteToast(id)}>
-                    <IoMdClose />
+        <>
+            <div className={`toast-item toast-item-${type} ${closeAnimation ? 'close-animation' : ''} `} ref={timerRef}
+                onMouseEnter={handlePauseTimer} onMouseLeave={handleResumeTimer}>
+                <div className="toast-item-content">
+                    <div className="toast-item-icon">
+                        {getIcon(type)}
+                    </div>
+                    <div className="toast-item-title">
+                        {title}
+                    </div>
+                    <div className="toast-item-close" onClick={() => deleteToast(id)}>
+                        <IoMdClose size={18} />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

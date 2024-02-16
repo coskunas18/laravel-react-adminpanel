@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser, getUserStatus } from '../UserSlice';
+import { updateUser, getUserStatus, } from '../UserSlice';
+import { toastChange } from '../../Toast/ToastSlice';
 import { CiEdit } from "react-icons/ci";
-
 import UserModalTitle from './UserModalTitle';
 
 export default function UserEditModal({ user, closeModal }) {
@@ -19,6 +19,8 @@ export default function UserEditModal({ user, closeModal }) {
     const fileInputRef = useRef(null)
     const dispatch = useDispatch()
 
+
+
     const onUpdateUserClicked = (id) => {
         let data = {
             id: id,
@@ -27,14 +29,16 @@ export default function UserEditModal({ user, closeModal }) {
             status: userStatus,
             telephone: telephone,
         }
-
         if (userImage) {
             data.image = userImage;
         }
-
         try {
             dispatch(updateUser(data));
-
+            dispatch(toastChange({
+                type: 'success',
+                title: 'User update is successful',
+                status: true,
+            }))
         } catch (err) {
             console.log(err.message);
         }

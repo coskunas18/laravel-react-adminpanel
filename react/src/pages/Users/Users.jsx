@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
     fetchUsers, getUserPerPage, getUserStatus, getUserSearch,
     selectAllUsers, onChangeSearch, getUserMeta, onChangePerPage, onNextPage, onPrevPage,
-    onClickBeginingPage, onClickLastPage
+    onClickBeginingPage, onClickLastPage,
 } from '../../components/users/UserSlice';
 import DefaultTable from '../../components/table/DefaultTable';
 import Search from '../../components/table/Search';
@@ -17,7 +17,7 @@ import { FaUserPlus } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 
 import UserModal from '../../components/users/modals/UserModal';
-
+import Toast from "../../components/Toast/Toast"
 
 export default function Product() {
     const dispatch = useDispatch();
@@ -33,6 +33,8 @@ export default function Product() {
     const search = useSelector(getUserSearch);
     const meta = useSelector(getUserMeta);
     const users = useSelector(selectAllUsers);
+    const toast = useSelector(state => state.toast.toast);
+
 
     useEffect(() => {
         if (usersStatus == "idle") {
@@ -189,6 +191,11 @@ export default function Product() {
 
     return (
         <>
+
+            {toast.status && (
+                <Toast type={toast.type} title={toast.title} />
+            )}
+
             {/* Title */}
             < Title title="Users">
                 <button className='bg-green-600 px-4 py-2 rounded text-white hover:bg-green-700 flex

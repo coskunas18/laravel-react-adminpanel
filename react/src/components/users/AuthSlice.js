@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosClient from "../../axios";
-
+import Toast from "../Toast/Toast";
 const initialState = {
     loading:false,
     currentUser:{},
@@ -72,7 +72,6 @@ export const authSlice = createSlice({
         })
         .addCase(authLogin.fulfilled,(state,action)=>{
             state.loading = false;
-
            if(action.payload?.errors){
                 state.errors = action.payload.errors
             }
