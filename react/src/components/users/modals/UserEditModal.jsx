@@ -32,16 +32,17 @@ export default function UserEditModal({ user, closeModal }) {
         if (userImage) {
             data.image = userImage;
         }
-        try {
-            dispatch(updateUser(data));
-            dispatch(toastChange({
-                type: 'success',
-                title: 'User update is successful',
-                status: true,
-            }))
-        } catch (err) {
-            console.log(err.message);
-        }
+        dispatch(updateUser(data)).then((resultAction) => {
+            if (updateUser.fulfilled.match(resultAction)) {
+                if (resultAction.payload.data?.id) {
+                    dispatch(toastChange({
+                        type: 'success',
+                        title: 'Update user is successful',
+                        status: true
+                    }))
+                }
+            }
+        });
     }
 
 

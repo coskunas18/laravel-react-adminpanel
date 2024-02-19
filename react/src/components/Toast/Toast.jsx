@@ -11,7 +11,6 @@ export default function Toast({ type, title }) {
     const dispatch = useDispatch();
 
 
-
     const handleCreateToast = (type, title) => {
         setToastArray((prev) => [
             {
@@ -29,8 +28,6 @@ export default function Toast({ type, title }) {
     }, []);
 
 
-    console.log(toastArray)
-
     const deleteToast = (id) => {
 
         setToastArray((prev) => prev.filter((item) => item.id !== id))
@@ -40,7 +37,6 @@ export default function Toast({ type, title }) {
             status: false,
         }))
     }
-
 
 
     return ReactDOM.createPortal(

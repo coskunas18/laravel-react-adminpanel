@@ -3,6 +3,7 @@ import UserModalTitle from "./UserModalTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewUser, getUserStatus } from "../UserSlice";
 import { MdFileUpload } from "react-icons/md";
+import { toastChange } from "../../Toast/ToastSlice";
 
 
 export default function UserCreateModal({ closeModal }) {
@@ -60,7 +61,17 @@ export default function UserCreateModal({ closeModal }) {
                 image: previewUrl,
                 password: password,
                 password_confirmation: password_confirmation
-            }));
+            })).then((action) => {
+                if (addNewUser.fulfilled.match(action)) {
+                    if (action.payload?.data) {
+                        dispatch(toastChange({
+                            type: 'success',
+                            title: 'Crate user is successful',
+                            status: true,
+                        }))
+                    }
+                }
+            })
         } catch (error) {
             console.log(error.message)
         }

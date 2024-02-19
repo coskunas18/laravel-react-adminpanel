@@ -10,7 +10,7 @@ export default function ToastItem({ type, title, deleteToast, id }) {
     const [remainingTime, setRemainingTime] = useState(0);
 
     const timerRef = useRef(null);
-    const duration = 2000;
+    const duration = 4500;
 
 
     useEffect(() => {

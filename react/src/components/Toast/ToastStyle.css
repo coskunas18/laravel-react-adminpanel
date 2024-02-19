@@ -1,5 +1,5 @@
 .toast{
-    @apply absolute bottom-0 right-2
+    @apply absolute bottom-0 left-14
 }
 
 .toast-item {
@@ -7,7 +7,7 @@
 }
 
 .toast-item-content {
-    @apply flex items-center text-white text-2xl
+    @apply flex items-center text-white text-xl
 }
 
 .toast-item-success{

@@ -15,7 +15,7 @@ export default function UserModalErrors() {
     return (
         <>
             {errorMessages && (
-                <div className="bg-red-700 p-2 text-white text-xl rounded-md">
+                <div className="bg-red-700 p-2 my-2 text-white text-xl rounded-md">
                     {errorMessages.map((err, index) => (
                         <div key={index}>
                             * {err}

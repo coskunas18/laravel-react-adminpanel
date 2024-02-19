@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux"
 import UserModalTitle from "./UserModalTitle"
 import { deleteUser } from "../UserSlice";
+import { toastChange } from "../../Toast/ToastSlice";
 
 export default function UserDeleteModal({ user, closeModal }) {
 
@@ -8,7 +9,16 @@ export default function UserDeleteModal({ user, closeModal }) {
 
 
     const deleteHandle = () => {
-        dispatch(deleteUser({ id: user.id }));
+        dispatch(deleteUser({ id: user.id })).then((action) => {
+            if (deleteUser.fulfilled.match(action)) {
+                dispatch(toastChange({
+                    type: 'success',
+                    title: 'Delete user is successful',
+                    status: true
+                }
+                ))
+            }
+        });
         closeModal();
     }
 
