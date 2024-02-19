@@ -33,6 +33,7 @@ export default function Product() {
     const search = useSelector(getUserSearch);
     const meta = useSelector(getUserMeta);
     const users = useSelector(selectAllUsers);
+
     const toast = useSelector(state => state.toast.toast);
 
 
@@ -217,8 +218,42 @@ export default function Product() {
                 {/* Search */}
 
                 {/* DataTable */}
-                <DefaultTable data={users}
-                    columns={columns}
+                <DefaultTable body={users && users.map((user) => [
+                    user.id,
+                    user.name,
+                    user.email,
+                    user.telephone,
+                    [
+                        <>
+                            <div className='flex gap-4'>
+                                <button className='bg-slate-700 rounded-md text-white p-2 text-xl hover:bg-slate-800'
+                                    onClick={() => faUserIcon(user.id)}>
+                                    <FaUser />
+                                </button>
+                                <button className='bg-slate-500 rounded-md text-white p-2 text-xl hover:bg-slate-600'
+                                    onClick={() => faPencilIcon(user.id)}>
+                                    <GoPencil />
+                                </button>
+                                <button className='bg-green-600 rounded-md text-white p-2 text-xl hover:bg-green-700'
+                                    onClick={() => faPhoneIcon(user.id)}>
+                                    <MdOutlinePhoneIphone />
+                                </button>
+                                <button className='bg-red-600 rounded-md text-white p-2 text-xl hover:bg-red-700'
+                                    onClick={() => faPTrashIcon(user.id)}>
+                                    <FaTrashAlt />
+                                </button>
+                            </div>
+                        </>
+                    ]
+
+                ])}
+                    head={[
+                        { name: 'ID', sortable: true },
+                        { name: 'Ad-Soyad', sortable: true },
+                        { name: 'Email' },
+                        { name: 'Telephone' },
+                        { name: 'İşlemler', width: 200 }
+                    ]}
                     status={usersStatus}
                     currentPage={current_page}
                     perPage={per_page}

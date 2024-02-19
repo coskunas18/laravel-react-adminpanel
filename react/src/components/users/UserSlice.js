@@ -109,6 +109,7 @@ export const UsersSlice = createSlice({
         .addCase(fetchUsers.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
+
         })
         .addCase(addNewUser.fulfilled,(state,action) => {
 
