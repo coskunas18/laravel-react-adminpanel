@@ -1,14 +1,15 @@
 import { MdSkipNext } from "react-icons/md";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
+import { useMediaQuery } from '@react-hook/media-query'
 
 
 export default function Pagination({ meta, current_page, per_page, perPageHandle, next, prev, last, begin }) {
 
-
+    const isMobile = useMediaQuery('(max-width:800px)');
     return (
 
-        <div className="flex items-center h-[50px]">
+        <div className={`flex items-center h-[50px] ${isMobile ? 'text-md' : ''} mt-2`}>
             <div className="p-3">
                 <label className="text-white" htmlFor="">Rows per page: </label>
                 <select value={per_page} className="rounded" onChange={(e) => perPageHandle(e.target.value)}>

@@ -13,9 +13,9 @@ const initialState =  usersAdapter.getInitialState({
 
 });
 
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async ({page,pageSize,search}) => {
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async ({page,pageSize,search,orderByColumn, orderByDirection}) => {
     try {
-        const response = await axios.get(`http://localhost:8000/api/users?page=${page}&pageSize=${pageSize}&search=${search}`);
+        const response = await axios.get(`http://localhost:8000/api/users?page=${page}&pageSize=${pageSize}&search=${search}&orderByColumn=${orderByColumn}&orderByDirection=${orderByDirection}`);
         const { data, meta, links } = response.data;
         return { data, meta, links };
     } catch (error) {

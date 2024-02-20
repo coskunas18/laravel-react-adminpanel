@@ -36,18 +36,20 @@ export default function Product() {
 
     const toast = useSelector(state => state.toast.toast);
 
+    const [sorting, setSorting] = useState(false);
+
 
     useEffect(() => {
         if (usersStatus == "idle") {
-            dispatch(fetchUsers({ page: current_page, pageSize: per_page, search: search }));
+            dispatch(fetchUsers({ page: current_page, pageSize: per_page, search: search, orderByColumn: sorting?.data_name || 'id', orderByDirection: sorting?.orderBy || 'asc' }));
         }
     }, [usersStatus]);
 
 
 
     useEffect(() => {
-        dispatch(fetchUsers({ page: current_page, pageSize: per_page, search: search }));
-    }, [search]);
+        dispatch(fetchUsers({ page: current_page, pageSize: per_page, search: search, orderByColumn: sorting?.data_name || 'id', orderByDirection: sorting?.orderBy || 'asc' }));
+    }, [search, sorting]);
 
 
 
@@ -126,69 +128,13 @@ export default function Product() {
     }
 
 
-    const columns = [
-        {
-            name: "ID",
-            selector: (row) => row.id,
-            sortable: true,
-        },
-        {
-            name: "Name ",
-            selector: (row) => row.name,
-            sortable: true,
-            cell: (row) => (
-                <div className='flex justify-center items-center gap-3'>
-                    {row?.image && (
-                        <div className='flex gap-4'>
-                            <img src={row.image} className='w-10 h-10 rounded-full' alt="" />
-                        </div>
-                    )}
-                    {!row?.image && (
-                        <div className='flex gap-4'>
-                            <FaUserCircle size={28} />
-                        </div>
-                    )}
-                    <div>
-                        {row.name}
-                    </div>
-                </div>
-            )
-        },
-        {
-            name: "E-mail",
-            selector: (row) => row.email
-        },
-        {
-            name: "Telephone",
-            selector: (row) => row.telephone
-        },
-        {
-            name: "İşlemler",
-            cell: (row) => (
-                <div className='flex gap-4'>
-                    <button className='bg-slate-700 rounded-md text-white p-2 text-xl hover:bg-slate-800'
-                        onClick={() => faUserIcon(row.id)}>
-                        <FaUser />
-                    </button>
-                    <button className='bg-slate-500 rounded-md text-white p-2 text-xl hover:bg-slate-600'
-                        onClick={() => faPencilIcon(row.id)}>
-                        <GoPencil />
-                    </button>
-                    <button className='bg-green-600 rounded-md text-white p-2 text-xl hover:bg-green-700'
-                        onClick={() => faPhoneIcon(row.id)}>
-                        <MdOutlinePhoneIphone />
-                    </button>
-                    <button className='bg-red-600 rounded-md text-white p-2 text-xl hover:bg-red-700'
-                        onClick={() => faPTrashIcon(row.id)}>
-                        <FaTrashAlt />
-                    </button>
-                </div>
-
-            )
-        }]
-
-
-
+    const columnHead = [
+        { name: 'ID', sortable: true, data_name: 'id' },
+        { name: 'Ad-Soyad', sortable: true, data_name: 'name' },
+        { name: 'Email' },
+        { name: 'Telephone' },
+        { name: 'İşlemler', width: 200 }
+    ];
 
     return (
         <>
@@ -247,13 +193,7 @@ export default function Product() {
                     ]
 
                 ])}
-                    head={[
-                        { name: 'ID', sortable: true },
-                        { name: 'Ad-Soyad', sortable: true },
-                        { name: 'Email' },
-                        { name: 'Telephone' },
-                        { name: 'İşlemler', width: 200 }
-                    ]}
+                    head={columnHead}
                     status={usersStatus}
                     currentPage={current_page}
                     perPage={per_page}
@@ -263,6 +203,8 @@ export default function Product() {
                     prev={prevPageHandle}
                     last={lastPageHandle}
                     begin={beginPageHandle}
+                    sorting={sorting}
+                    setSorting={setSorting}
                 />
                 {/* DataTable */}
             </div>

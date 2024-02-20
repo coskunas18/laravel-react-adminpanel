@@ -17,10 +17,13 @@ class UserController extends Controller
     {
         $pageSize = $request->input('pageSize', 10);
         $search = $request->input('search');
+        $orderByColumn = $request->input('orderByColumn', 'id');
+        $orderByDirection = $request->input('orderByDirection', 'asc');
 
         $usersQuery = User::where('name', 'like', "%$search%")
             ->orWhere('telephone', 'like', "%$search%")
-            ->orWhere('email', 'like', "%$search%");
+            ->orWhere('email', 'like', "%$search%")
+            ->orderBy($orderByColumn, $orderByDirection);
 
         $users = $usersQuery->paginate($pageSize);
 
