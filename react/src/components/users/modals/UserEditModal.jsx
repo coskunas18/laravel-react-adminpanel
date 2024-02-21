@@ -21,6 +21,9 @@ export default function UserEditModal({ user, closeModal }) {
 
 
 
+
+
+
     const onUpdateUserClicked = (id) => {
         let data = {
             id: id,
@@ -135,7 +138,7 @@ export default function UserEditModal({ user, closeModal }) {
                     <div className="flex items-center gap-4">
                         <div className="flex gap-1 items-center">
                             <label className="text-xl font-semibold" htmlFor="">Active</label>
-                            <input type="radio"
+                            <input type="radio" checked={userStatus === "active"}
                                 className="h-5 w-5 focus:ring-0 checked:hover:bg-slate-600 outline-none rounded-full bg-slate-400 checked:bg-slate-600
                                 hover:bg-slate-500 "
                                 name="status" value='active' onChange={(e) => setUserStatus(e.target.value)} />
@@ -143,7 +146,7 @@ export default function UserEditModal({ user, closeModal }) {
 
                         <div className="flex gap-1 items-center">
                             <label className="text-xl font-semibold" htmlFor="">Passive</label>
-                            <input type="radio"
+                            <input type="radio" checked={userStatus === "passive"}
                                 className="h-5 w-5 focus:ring-0 checked:hover:bg-slate-600 outline-none rounded-full bg-slate-400 checked:bg-slate-600
                                 hover:bg-slate-500 "
                                 name="status" value='passive' onChange={(e) => setUserStatus(e.target.value)} />

@@ -9,9 +9,9 @@ export default function Pagination({ meta, current_page, per_page, perPageHandle
     const isMobile = useMediaQuery('(max-width:800px)');
     return (
 
-        <div className={`flex items-center h-[50px] ${isMobile ? 'text-md' : ''} mt-2`}>
+        <div className={`flex items-center h-[50px] mt-5 ${isMobile ? 'text-sm' : ''}`}>
             <div className="p-3">
-                <label className="text-white" htmlFor="">Rows per page: </label>
+                <label className="text-white sm:text-sm" htmlFor="">Rows per page: </label>
                 <select value={per_page} className="rounded" onChange={(e) => perPageHandle(e.target.value)}>
                     <option value={10}>10</option>
                     <option value={15}>15</option>

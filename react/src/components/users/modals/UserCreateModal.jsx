@@ -94,9 +94,9 @@ export default function UserCreateModal({ closeModal }) {
             <form encType="multipart/form-data" onSubmit={(e) => {
                 onClickCreateUser();
                 e.preventDefault();
-            }} className="flex flex-col justify-start gap-3 px-6 py-2">
+            }} className="flex flex-col flex-wrap justify-start gap-3 px-6 py-2">
 
-                <div className="flex flex-col gap-2 ">
+                <div className="flex flex-col flex-wrap gap-2 ">
                     <p className="text-2xl font-semibold">Profile Photo:</p>
                     <div className="flex font-semibold text-slate-700 cursor-pointer items-center gap-3" onClick={handleUploadTriggerClick}>
                         <MdFileUpload size={25} /> Upload Photo :
@@ -113,7 +113,7 @@ export default function UserCreateModal({ closeModal }) {
                         focus:ring-0 focus:border-slate-500  bg-slate-400/25" name="image" onChange={handleFileChange}
                     />
                 </div>
-                <div className="grid grid-cols-2  gap-2 ">
+                <div className="grid md:grid-cols-2 gap-2 ">
                     <div>
                         <p className="text-2xl font-semibold">Name - Surname:</p>
                         <input
@@ -156,7 +156,7 @@ export default function UserCreateModal({ closeModal }) {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid md:grid-cols-2 gap-2">
                     <div>
                         <p className="text-2xl font-semibold">Password:</p>
                         <input type="password"

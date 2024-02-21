@@ -9,11 +9,11 @@ export default function UserModalTitle({ title, userPreview = null }) {
 
     return (
         <>
-            <div className="text-4xl text-slate-700 border-b-2 text-center border-slate-700
+            <div className="md:text-4xl text-slate-700 border-b-2 text-center border-slate-700
         flex items-center gap-2 font-semibold">
-                <p>{title}</p>
+                <p className="">{title}</p>
                 {userPreview && (
-                    <img src={userPreview} className="w-14 h-14 rounded-full shadow-md" alt="" />
+                    <img src={userPreview} className="w-14 h-14  rounded-full shadow-md" alt="" />
                 )}
                 {!userPreview && (
                     <FaUser size={30} />

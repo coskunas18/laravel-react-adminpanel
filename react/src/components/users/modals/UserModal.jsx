@@ -11,6 +11,7 @@ import UserCreateModal from "./UserCreateModal";
 
 export default function UserModal({ modalClose, userId, modalOptions }) {
 
+
     let modalRef = useRef();
 
     const user = useSelector(state => selectUserById(state, userId));
@@ -31,9 +32,10 @@ export default function UserModal({ modalClose, userId, modalOptions }) {
     return (
         <>
 
-            <div className="fixed top-0 left-0 flex justify-center items-center z-50 w-full h-full
-            bg-black bg-opacity-30 backdrop-filter backdrop-blur-sm">
-                <div ref={modalRef} className="bg-slate-200/70 p-10 rounded-md relative flex flex-col gap-2 shadow-xl  ">
+            <div className={`fixed top-0 left-0 flex justify-center items-center z-50 w-full h-full
+            bg-black bg-opacity-30 backdrop-filter backdrop-blur-sm`}>
+                <div ref={modalRef}
+                    className={`bg-slate-200/70 p-6 rounded-md relative flex flex-col gap-2 shadow-xl`}>
                     <div>
                         <IoMdClose className="absolute top-2 right-2 text-red-600 cursor-pointer rounded-full
                          hover:bg-black/10" size={24} onClick={modalClose} />

@@ -63,19 +63,21 @@ export default function DefaultTable({ body, head, status, currentPage, perPage,
                                                         </button>
                                                     )}
                                                 </div>
-
                                             </th>
                                         ))}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {body && body.map((items, key) => (
-                                        <tr key={key} className="group border-t border-slate-600 odd:bg-slate-400">
+                                    {body && body.map((items, rowIndex) => (
+                                        <tr key={rowIndex} className="group border-t border-slate-600 odd:bg-slate-400">
                                             {items.map((item, key) => (
                                                 <td key={key} className="p-3 text-sm text-left group-hover:bg-slate-800
-                                                    group-hover:cursor-pointer group-hover:text-white">{Array.isArray(item) ?
+                                                    group-hover:cursor-pointer group-hover:text-white">
+                                                    {Array.isArray(item) ?
                                                         <div className="flex items-center gap-2">
-                                                            {item}
+                                                            {item.map((subItem, subIndex) => (
+                                                                <span key={subIndex}>{subItem}</span>
+                                                            ))}
                                                         </div> : item
                                                     }</td>
                                             ))}
@@ -90,13 +92,10 @@ export default function DefaultTable({ body, head, status, currentPage, perPage,
                             Herhangi bir veri bulunamadı
                         </div>
                     )}
-
                 </div>
-
                 <Pagination current_page={currentPage} per_page={perPage} meta={meta}
                     perPageHandle={perPageHandle} next={next} prev={prev} last={last}
                     begin={begin} />
-
             </div>
 
         </div>

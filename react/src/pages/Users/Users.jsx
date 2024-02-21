@@ -131,6 +131,7 @@ export default function Product() {
     const columnHead = [
         { name: 'ID', sortable: true, data_name: 'id' },
         { name: 'Ad-Soyad', sortable: true, data_name: 'name' },
+        { name: '', data_name: 'image', },
         { name: 'Email' },
         { name: 'Telephone' },
         { name: 'İşlemler', width: 200 }
@@ -167,6 +168,11 @@ export default function Product() {
                 <DefaultTable body={users && users.map((user) => [
                     user.id,
                     user.name,
+                    [
+                        <>
+                            {user.image !== null ? <img src={user.image} className='w-10 h-10 rounded-full' alt="" /> : <FaUserCircle size={20} />}
+                        </>
+                    ],
                     user.email,
                     user.telephone,
                     [
